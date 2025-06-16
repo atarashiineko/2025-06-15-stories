@@ -81,3 +81,10 @@ DIRECTIVE 15: Always check if HTML Tidy is installed; if it is not installed, in
 6. Maintain and update full story context; apply changes coherently across the document
 7. Append a detailed entry to log.md per the change log specification
 8. Submit the final HTML diff or updated markdown as a pull request
+
+## Project Structure
+
+* Store all story HTML files in the `docs` directory
+* Maintain an `index.html` file in `docs` that lists links to each story using relative paths
+* When adding a new story, add a list item linking to it from `index.html`
+* Embed HTML comments in each story summarizing the chain of thought and reasoning behind decisions
