@@ -11,6 +11,20 @@ Provide rules and directions for a Codex-powered LLM agent that diffs and edits 
 * Always run tidy with options -indent -wrap 100 on all HTML output before submitting pull requests
 * If tidy is not installed, install it automatically before processing
 
+## File Organization
+
+* All story HTML files reside in the docs folder of the repository
+* docs/index.html serves as the landing page and lists all story files in a simple HTML list with relative links
+* New story files are named <story-name>.html and placed under docs/
+* log.md and AGENTS.md remain in the repository root
+
+## Project Structure
+
+* Store all story HTML files in the docs directory
+* Maintain an index.html file in docs that lists links to each story using relative paths
+* When adding a new story, add a list item linking to it from index.html
+* Embed HTML comments in each story summarizing the chain of thought and reasoning behind decisions
+
 ## Paragraph ID Specification
 
 Each paragraph element receives an ID of the form: para-<random-segment>
@@ -60,31 +74,28 @@ DIRECTIVE 02: When editing, output only the changed HTML blocks with clear diff 
 DIRECTIVE 03: Use plain HTML annotations as code; do not output natural-language descriptions of diffs
 DIRECTIVE 04: Always run HTML Tidy on the full document and present the reformatted HTML before finalizing the PR
 DIRECTIVE 05: Do not rewrite unchanged blocks; reference them by id when context is needed
-DIRECTIVE 06: Use direct, imperative language when issuing commands to the LLM agent, for example Replace the content of <h2 id="sec-03"> with …
+DIRECTIVE 06: Use direct, imperative language when issuing commands to the LLM agent, for example Replace the content of <h2 id="sec-03"> with ...
 DIRECTIVE 07: Do not include explanatory prose outside of HTML-annotated code blocks in diff outputs
 DIRECTIVE 08: Validate that all opened HTML tags are properly closed and that id values are unique
-DIRECTIVE 09: When instructed to create a new story, generate a new markdown file named after the story (for example STORY-NAME.md) and begin with an outline of major sections
+DIRECTIVE 09: When instructed to create a new story, generate docs/<story-name>.html and begin with an outline of major sections
 DIRECTIVE 10: Always consider the entire story context when making edits; ensure any change maintains coherence with previous events and narrative flow
 DIRECTIVE 11: Maintain Detailed Change Log in log.md After completing any task or feature implementation, append an entry to log.md. Format a Markdown level-2 header containing the ISO 8601 timestamp and a brief title of the task. Under that header include Task Overview, Context, Thought Process, Chosen Solution, Implementation, Impact Summary. Always prepend new entries so the most recent appears at the top
 DIRECTIVE 12: Adhere to This Specification File All implementers must follow each directive in this agents.md exactly as written. Any deviation requires explicit sign-off from the project lead
 DIRECTIVE 13: Never use nested markdown lists
 DIRECTIVE 14: For punctuation always use ASCII alternatives when available
 DIRECTIVE 15: Always check if HTML Tidy is installed; if it is not installed, install it automatically before processing. Run tidy with options -indent -wrap 100 to format output HTML with 100 characters of line width and ensure nice human-readable indentation
+DIRECTIVE 16: Place all story HTML files in docs/ and update docs/index.html with a list item linking to each new story file
+DIRECTIVE 17: When generating story HTML, include the agent’s chain of thought and decision rationale as HTML comments within the file so iterations preserve the reasoning history
 
 ## Workflow
 
 1. Receive source text or story request
-2. If creating a new story, generate STORY-NAME.md and produce an outline of major sections
-3. Wrap source prose in HTML with semantic elements and unique ids
-4. Perform diff or edit operations on HTML blocks only, referencing paragraph ids
-5. Run HTML Tidy to normalize formatting, enforce 100 character line width and human-readable indentation
-6. Maintain and update full story context; apply changes coherently across the document
-7. Append a detailed entry to log.md per the change log specification
-8. Submit the final HTML diff or updated markdown as a pull request
-
-## Project Structure
-
-* Store all story HTML files in the `docs` directory
-* Maintain an `index.html` file in `docs` that lists links to each story using relative paths
-* When adding a new story, add a list item linking to it from `index.html`
-* Embed HTML comments in each story summarizing the chain of thought and reasoning behind decisions
+2. If creating a new story, generate docs/<story-name>.html and produce an outline of major sections
+3. Update docs/index.html to include a link to the new story file
+4. Wrap source prose in HTML with semantic elements and unique ids
+5. Perform diff or edit operations on HTML blocks only, referencing paragraph ids
+6. Run HTML Tidy to normalize formatting, enforce 100 character line width and human-readable indentation
+7. Embed HTML comments containing thought process and decisions at relevant points in the story file
+8. Maintain and update full story context; apply changes coherently across the document
+9. Append a detailed entry to log.md per the change log specification
+10. Submit the final HTML diff or updated markdown as a pull request
